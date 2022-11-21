@@ -13,9 +13,10 @@ export async function postSignUp(req, res) {
 
 export async function postSignIn(req, res) {
   try {
-    await sessionsCollection.insertOne(req.token);
+    const token = req.token;
+    await sessionsCollection.insertOne(token);
 
-    res.send(req.token);
+    res.send(token);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

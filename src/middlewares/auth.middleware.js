@@ -2,6 +2,7 @@ import { userCollection, sessionsCollection } from "../database/db.js";
 
 export async function authMiddleware(req, res, next) {
   const { authorization } = req.headers;
+  console.log(req.headers);
 
   const token = authorization?.replace("Bearer ", "");
 
@@ -16,7 +17,6 @@ export async function authMiddleware(req, res, next) {
     if (!user) {
       return res.sendStatus(401);
     }
-
     req.user = user;
     next();
   } catch (err) {

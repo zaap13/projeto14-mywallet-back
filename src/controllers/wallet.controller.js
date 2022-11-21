@@ -7,7 +7,7 @@ export async function getItens(req, res) {
     const itens = await walletCollection.find({ userId: user._id }).toArray();
     delete user.password;
 
-    res.send({ itens });
+    res.send({ user, itens });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
@@ -15,16 +15,8 @@ export async function getItens(req, res) {
 }
 
 export async function postItem(req, res) {
-  const { title, date, value, type } = req.body;
-  const user = req.user;
   try {
-    await walletCollection.insertOne({
-      userId: user._id,
-      title,
-      date,
-      value,
-      type,
-    });
+    await walletCollection.insertOne(req.item);
 
     res.sendStatus(201);
   } catch (err) {
